@@ -6,8 +6,7 @@ pub struct Board {
     fields: [[Player; 3]; 3],
 }
 
-pub type Coords = [usize; 2];
-
+pub type Coords = (usize, usize);
 
 impl Board {
     pub fn new() -> Board {
@@ -27,7 +26,7 @@ impl Board {
         for row_index in 0..3 {
             for column_index in 0..3 {
                 if self.fields[row_index][column_index] == Player::None {
-                    possible_moves.push([row_index, column_index])
+                    possible_moves.push((row_index, column_index))
                 }
             }
         }
@@ -36,15 +35,15 @@ impl Board {
     }
 
     pub fn make_move(&mut self, coords: Coords, player: Player) -> Result<(), ErrorKind> {
-        if coords[0] >= 3 || coords[0] < 0 {
+        if coords.0 >= 3 || coords.0 < 0 {
             return Result::Err(ErrorKind::InvalidInput)
         }
 
-        if coords[1] >= 3 || coords[1] < 0 {
+        if coords.1 >= 3 || coords.1 < 0 {
             return Result::Err(ErrorKind::InvalidInput)
         }
 
-        self.fields[coords[0]][coords[1]] = player;
+        self.fields[coords.0][coords.1] = player;
 
         return Result::Ok(());
     }
