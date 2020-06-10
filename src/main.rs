@@ -11,8 +11,7 @@ fn main() {
     let possible_moves = board.get_possible_moves();
     println!("{:?}", possible_moves);
 
-    let coords: Coords = [0, 0];
-    board.make_move(&coords, Player::X);
+    board.make_move([0, 0], Player::X);
 
     let possible_moves = board.get_possible_moves();
     println!("{:?}", possible_moves);

@@ -35,7 +35,7 @@ impl Board {
         return possible_moves;
     }
 
-    pub fn make_move(&mut self, coords: &Coords, player: Player) -> Result<(), ErrorKind> {
+    pub fn make_move(&mut self, coords: Coords, player: Player) -> Result<(), ErrorKind> {
         if coords[0] >= 3 || coords[0] < 0 {
             return Result::Err(ErrorKind::InvalidInput)
         }
