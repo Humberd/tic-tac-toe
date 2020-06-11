@@ -2,7 +2,7 @@ use std::io::{ErrorKind};
 use crate::player::Player;
 
 pub struct Board {
-    fields: [[Player; 3]; 3],
+    pub fields: [[Player; 3]; 3],
     undo_stack: Vec<Coords>,
 }
 

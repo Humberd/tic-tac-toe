@@ -1,36 +1,23 @@
-use console::Term;
-
 use crate::board::{Board, Coords};
 use crate::player::Player;
+use crate::screen_drawer::ScreenDrawer;
+use std::cell::RefCell;
 
 mod board;
+mod screen_drawer;
 mod player;
 
 fn main() -> Result<(), std::io::Error> {
-    let mut board = Board::new();
-    let possible_moves = board.get_possible_moves();
-    println!("{:?}", possible_moves);
+    let mut board = RefCell::from(Board::new());
+    let mut screen_drawer = ScreenDrawer::new(&board);
 
-    board.make_move((0, 0), Player::X)?;
+    board.borrow_mut().make_move((0,1), Player::X);
 
-    let possible_moves = board.get_possible_moves();
-    println!("{:?}", possible_moves);
+    screen_drawer.draw()?;
 
-    board.undo()?;
+    board.borrow_mut().make_move((2,1), Player::O);
 
-    let possible_moves = board.get_possible_moves();
-    println!("{:?}", possible_moves);
-
-    println!("State: {:#?}", board.get_state());
-
-    board.make_move((0, 0), Player::X)?;
-    board.make_move((1, 1), Player::X)?;
-    board.make_move((2, 2), Player::X)?;
-
-    println!("State: {:#?}", board.get_state());
-
-    let term = Term::stdout();
-    term.clear_screen()?;
+    screen_drawer.draw()?;
 
     Ok(())
 }
