@@ -19,13 +19,17 @@ impl<'a> ScreenDrawer<'a> {
     pub fn draw(&self) -> Result<(), Error> {
         self.term.clear_screen()?;
 
+        println!("You: X     Bot: O");
+
         for (index, row) in self.board.borrow().fields.iter().enumerate() {
-            println!("{} | {} | {}", row[0], row[1], row[2]);
+            println!(" {} | {} | {}", row[0], row[1], row[2]);
 
             if (index < 2) {
-                println!("---------")
+                println!("-----------")
             }
         }
+
+        println!("\n");
 
         Ok(())
     }
