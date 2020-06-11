@@ -4,6 +4,7 @@ use crate::player::Player;
 
 pub struct Board {
     fields: [[Player; 3]; 3],
+    undo_stack: Vec<Coords>
 }
 
 pub type Coords = (usize, usize);
@@ -15,13 +16,13 @@ impl Board {
                 [Player::None, Player::None, Player::None],
                 [Player::None, Player::None, Player::None],
                 [Player::None, Player::None, Player::None],
-            ]
+            ],
+            undo_stack: vec![]
         };
     }
 
     pub fn get_possible_moves(&self) -> Vec<Coords> {
         let mut possible_moves: Vec<Coords> = vec![];
-
 
         for row_index in 0..3 {
             for column_index in 0..3 {
@@ -44,11 +45,23 @@ impl Board {
         }
 
         self.fields[coords.0][coords.1] = player;
+        self.undo_stack.push(coords);
 
         return Ok(());
     }
 
-    pub fn undo(&mut self) {
+    pub fn undo(&mut self) -> Result<(), ErrorKind> {
+        let coords = match self.undo_stack.pop() {
+            Some(coords) => coords,
+            None => return Err(ErrorKind::InvalidData),
+        };
+
+        self.fields[coords.0][coords.1] = Player::None;
+
+        return Ok(())
+    }
+
+    pub fn get_state(&self) {
 
     }
 }

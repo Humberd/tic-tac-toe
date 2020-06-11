@@ -11,7 +11,12 @@ fn main() -> Result<(), std::io::Error> {
     let possible_moves = board.get_possible_moves();
     println!("{:?}", possible_moves);
 
-    board.make_move((0,015), Player::X)?;
+    board.make_move((0, 0), Player::X)?;
+
+    let possible_moves = board.get_possible_moves();
+    println!("{:?}", possible_moves);
+
+    board.undo()?;
 
     let possible_moves = board.get_possible_moves();
     println!("{:?}", possible_moves);
