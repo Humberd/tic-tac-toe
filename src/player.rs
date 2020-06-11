@@ -1,4 +1,5 @@
 #[derive(PartialEq)]
+#[derive(Debug)]
 pub enum Player {
     X,
     O,
@@ -6,7 +7,7 @@ pub enum Player {
 }
 
 impl Player {
-    fn as_number(&self) -> i32 {
+    pub fn as_number(&self) -> i32 {
         return match self {
             Player::X => 1,
             Player::O => -1,
