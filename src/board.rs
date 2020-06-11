@@ -36,15 +36,19 @@ impl Board {
 
     pub fn make_move(&mut self, coords: Coords, player: Player) -> Result<(), ErrorKind> {
         if coords.0 >= 3 || coords.0 < 0 {
-            return Result::Err(ErrorKind::InvalidInput)
+            return Err(ErrorKind::InvalidInput)
         }
 
         if coords.1 >= 3 || coords.1 < 0 {
-            return Result::Err(ErrorKind::InvalidInput)
+            return Err(ErrorKind::InvalidInput)
         }
 
         self.fields[coords.0][coords.1] = player;
 
-        return Result::Ok(());
+        return Ok(());
+    }
+
+    pub fn undo(&mut self) {
+
     }
 }
