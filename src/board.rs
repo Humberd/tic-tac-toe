@@ -1,4 +1,4 @@
-use std::io::{ErrorKind};
+use std::io::{ErrorKind, Error};
 use crate::player::Player;
 
 pub struct Board {
@@ -41,16 +41,17 @@ impl Board {
         return possible_moves;
     }
 
-    pub fn make_move(&mut self, coords: Coords, player: Player) -> Result<(), ErrorKind> {
+    pub fn make_move(&mut self, coords: Coords, player: &Player) -> Result<(), Error> {
         if coords.0 >= 3 {
-            return Err(ErrorKind::InvalidInput);
+            return Err(Error::new(ErrorKind::InvalidInput, "Coord x not valid"));
         }
 
         if coords.1 >= 3 {
-            return Err(ErrorKind::InvalidInput);
+            return Err(Error::new(ErrorKind::InvalidInput, "Coord y not valid"));
+
         }
 
-        self.fields[coords.0][coords.1] = player;
+        self.fields[coords.0][coords.1] = *player;
         self.undo_stack.push(coords);
 
         return Ok(());

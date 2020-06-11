@@ -1,6 +1,6 @@
 use std::fmt::{Display, Formatter, Error};
 
-#[derive(PartialEq)]
+#[derive(PartialEq, Clone, Copy)]
 #[derive(Debug)]
 pub enum Player {
     X,
